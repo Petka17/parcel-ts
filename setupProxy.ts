@@ -1,7 +1,7 @@
-// eslint-disable-next-line
-const proxy = require("http-proxy-middleware");
+import proxy from "http-proxy-middleware";
+import { Express } from "express";
 
-module.exports = function(app) {
+export default function(app: Express): any {
   app.use(
     proxy("/api", {
       target: process.env.API_URL,
@@ -9,4 +9,4 @@ module.exports = function(app) {
       pathRewrite: { "^/api": "" }
     })
   );
-};
+}

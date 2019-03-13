@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es3",
+    "module": "commonjs",
+    "lib": ["dom", "es2017"],
+    "checkJs": false,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+    "paths": {
+      "api": ["api"],
+      "components": ["components"],
+      "state": ["state"],
+      "utils": ["utils"]
+    }
+  }
+}

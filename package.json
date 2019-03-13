@@ -1,0 +1,67 @@
+{
+  "name": "parsel-ts",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "nodemon --exec \"env-cmd .env node devServer.js\" --watch devServer.js --watch setupProxy.js --watch .env",
+    "build": "parcel public/index.html",
+    "test": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint \"./src/**/*.{ts,tsx}\"",
+    "format": "prettier --write ./**/*.{ts,tsx,js,json,yml}",
+    "server": "env-cmd .env node server.js"
+  },
+  "alias": {
+    "api": "./src/api",
+    "components": "./src/components",
+    "state": "./src/state",
+    "utils": "./src/utils"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json}": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "jsonous": "^3.3.1",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-router-dom": "^4.3.1",
+    "resulty": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.2",
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
+    "@typescript-eslint/parser": "^1.4.2",
+    "env-cmd": "^8.0.2",
+    "eslint": "^5.15.1",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-import-resolver-typescript": "^1.1.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.5.0",
+    "express": "^4.16.4",
+    "http-proxy-middleware": "^0.19.1",
+    "husky": "^1.3.1",
+    "jest": "^24.5.0",
+    "jest-dom": "^3.1.3",
+    "lint-staged": "^8.1.5",
+    "morgan": "^1.9.1",
+    "parcel-bundler": "^1.12.1",
+    "prettier": "^1.16.4",
+    "react-testing-library": "^6.0.0",
+    "ts-jest": "^24.0.0",
+    "typescript": "^3.3.3333"
+  }
+}

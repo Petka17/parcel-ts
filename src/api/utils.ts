@@ -54,20 +54,22 @@ export const failedResponseDecoder: Decoder<
   .assign("success", _.field("success", falseVal))
   .assign("errorMessage", _.field("message", _.string));
 
+type methods = "get" | "post" | "put" | "patch" | "delete";
+
 export function makeRequest<T>(
   url: string,
-  method: string,
+  method: methods,
   body: any,
   serverDataDecoder: Decoder<T>
 ): Promise<T>;
 export function makeRequest(
   url: string,
-  method: string,
+  method: methods,
   body: any
 ): Promise<void>;
 export async function makeRequest<T>(
   url: string,
-  method: string,
+  method: methods,
   body: any,
   serverDataDecoder?: Decoder<T>
 ): Promise<T | void> {

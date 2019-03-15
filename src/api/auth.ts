@@ -48,10 +48,11 @@ export const loginWithCode = (phone: string, code: string): Promise<string> =>
 
 /* istanbul ignore next */
 export const getUserForToken = (): Promise<string> =>
-  new Promise(resolve => {
+  new Promise((resolve, reject) => {
     console.log("run promise");
     setTimeout(() => {
       console.log("resolve promise");
-      resolve("some_external_id");
+      // resolve("some_external_id");
+      reject();
     }, 1000);
   });

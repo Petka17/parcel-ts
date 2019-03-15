@@ -1,8 +1,7 @@
 import React from "react";
-import layout from "components/layout";
 import * as auth from "state/auth";
 
-function SigninPage(): React.ReactElement {
+function SigninForm(): React.ReactElement {
   const {
     canStartCodeRequest,
     phone,
@@ -76,4 +75,10 @@ function SigninPage(): React.ReactElement {
   );
 }
 
-export default layout(SigninPage);
+const Signin = (): React.ReactElement => (
+  <auth.Provider>
+    <SigninForm />
+  </auth.Provider>
+);
+
+export default Signin;

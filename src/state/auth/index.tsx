@@ -1,6 +1,8 @@
 import React from "react";
 import { codeRequest, loginWithCode } from "api/auth";
 
+import history from "state/history";
+
 import { initialState, reducer, PHONE_LENGTH, CODE_LENGTH } from "./state";
 
 import {
@@ -83,6 +85,7 @@ export function Provider({
       loginWithCode(phone, code)
         .then(() => {
           dispatch(new LoginWithCodeSuccess());
+          history.push("/");
         })
         .catch((err: Error) => {
           dispatch(new LoginWithCodeFail(err.message));

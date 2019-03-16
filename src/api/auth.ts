@@ -46,13 +46,20 @@ export const loginWithCode = (phone: string, code: string): Promise<string> =>
  * Get User Status
  */
 
-/* istanbul ignore next */
-export const getUserForToken = (): Promise<string> =>
-  new Promise((resolve, reject) => {
-    console.log("run promise");
-    setTimeout(() => {
-      console.log("resolve promise");
-      // resolve("some_external_id");
-      reject();
-    }, 1000);
-  });
+export const getCandidateStatus = "/api/employer/status/";
+
+interface EmployerStatus {
+  companyGroupId: number;
+  companyGroupName: string;
+  companyGroupRole: string;
+  employerId: number;
+}
+
+export const employerStatusDecoder = _.succeed({})
+  .assign("companyGroupId", _.field("company_group_id", _.number))
+  .assign("companyGroupName", _.field("company_group_name", _.string))
+  .assign("companyGroupRole", _.field("company_group_role", _.string))
+  .assign("employerId", _.field("id", _.number));
+
+export const getUserForToken = (): Promise<EmployerStatus> =>
+  makeRequest(getCandidateStatus, "get", null, employerStatusDecoder);

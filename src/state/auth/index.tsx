@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 import { codeRequest, loginWithCode } from "api/auth";
 
 import history from "state/history";
@@ -83,8 +84,9 @@ export function Provider({
       dispatch(new StartLoginWithCode());
 
       loginWithCode(phone, code)
-        .then(() => {
+        .then(authToken => {
           dispatch(new LoginWithCodeSuccess());
+          Cookies.set("auth_token", authToken);
           history.push("/");
         })
         .catch((err: Error) => {

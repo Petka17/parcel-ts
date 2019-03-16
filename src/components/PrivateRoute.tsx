@@ -1,26 +1,22 @@
 import React from "react";
 
 import history from "state/history";
-import * as auth from "state/auth";
 
 import { getUserForToken } from "api/auth";
 
-function AuthChecker({
+export default function PrivateRoute({
   children
 }: {
   children: React.ReactNode;
 }): React.ReactElement {
-  const { phone } = auth.useContext();
-  const [isLoading, setIsLoading] = React.useState(phone === "");
-  const [externalId, setExternalId] = React.useState<string | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [employerId, setExternalId] = React.useState<number | null>(null);
 
   React.useEffect(() => {
-    if (phone === "") return;
-
     getUserForToken()
-      .then((externalId: string) => {
+      .then(({ employerId }) => {
         setIsLoading(false);
-        setExternalId(externalId);
+        setExternalId(employerId);
       })
       .catch(() => {
         setIsLoading(false);
@@ -30,17 +26,9 @@ function AuthChecker({
 
   return isLoading ? (
     <div>Loading...</div>
-  ) : externalId === null ? (
+  ) : employerId === null ? (
     <div>Redirecting to signin...</div>
   ) : (
     <React.Fragment>{children}</React.Fragment>
   );
 }
-
-const PrivateRoute = ({ children }): React.ReactElement => (
-  <auth.Provider>
-    <AuthChecker>{children}</AuthChecker>
-  </auth.Provider>
-);
-
-export default PrivateRoute;

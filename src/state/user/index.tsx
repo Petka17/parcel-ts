@@ -24,9 +24,13 @@ interface Context {
   companyRole?: string;
   employerId?: number;
   updateState: (state: State) => void;
+  clearState: () => void;
 }
 
-const ContextFactory = React.createContext<Context>({ updateState: () => {} });
+const ContextFactory = React.createContext<Context>({
+  updateState: () => {},
+  clearState: () => {}
+});
 
 /**
  * Provider
@@ -45,9 +49,14 @@ export function Provider({
     });
   };
 
+  const clearState = (): void => {
+    setState({});
+  };
+
   const context: Context = {
     ...state,
-    updateState
+    updateState,
+    clearState
   };
 
   return (

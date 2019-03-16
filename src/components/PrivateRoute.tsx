@@ -33,9 +33,9 @@ export default function PrivateRoute({
 
   return isLoading ? (
     <div>Loading...</div>
-  ) : userContext.employerId === null ? (
-    <div>Redirecting to signin...</div>
-  ) : (
+  ) : userContext.employerId ? (
     <React.Fragment>{children}</React.Fragment>
+  ) : (
+    <div>Redirecting to signin...</div>
   );
 }

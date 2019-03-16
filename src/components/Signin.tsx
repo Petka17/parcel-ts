@@ -1,5 +1,5 @@
 import React from "react";
-import * as auth from "state/auth";
+import * as auth from "state/signin";
 
 function SigninForm(): React.ReactElement {
   const {

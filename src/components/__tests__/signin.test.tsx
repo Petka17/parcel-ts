@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, wait } from "react-testing-library";
 
 import SigninPage from "../Signin";
-import { codeRequest, loginWithCode } from "../../api/auth";
+import { codeRequest, loginWithCode } from "api/auth";
 
 jest.mock("../../api/auth", () => {
   return {

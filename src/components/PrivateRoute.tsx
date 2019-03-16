@@ -2,6 +2,8 @@ import React from "react";
 
 import history from "state/history";
 
+import * as user from "state/user";
+
 import { getUserForToken } from "api/auth";
 
 export default function PrivateRoute({
@@ -10,13 +12,18 @@ export default function PrivateRoute({
   children: React.ReactNode;
 }): React.ReactElement {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [employerId, setExternalId] = React.useState<number | null>(null);
+  const userContext = user.useContext();
 
   React.useEffect(() => {
     getUserForToken()
-      .then(({ employerId }) => {
+      .then(({ companyId, companyName, companyRole, employerId }) => {
+        userContext.updateState({
+          companyId,
+          companyName,
+          companyRole,
+          employerId
+        });
         setIsLoading(false);
-        setExternalId(employerId);
       })
       .catch(() => {
         setIsLoading(false);
@@ -26,7 +33,7 @@ export default function PrivateRoute({
 
   return isLoading ? (
     <div>Loading...</div>
-  ) : employerId === null ? (
+  ) : userContext.employerId === null ? (
     <div>Redirecting to signin...</div>
   ) : (
     <React.Fragment>{children}</React.Fragment>

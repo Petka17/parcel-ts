@@ -1,5 +1,6 @@
 import * as _ from "jsonous";
 import { makeRequest } from "./utils";
+import { succeed } from "jsonous";
 
 /**
  * Request code
@@ -34,12 +35,24 @@ export const createLoginWithCodeBody = (
   profile_type: "employer"
 });
 
-export const loginWithCode = (phone: string, code: string): Promise<string> =>
+export const loginDecoder = succeed({})
+  .assign("authToken", _.field("auth_token", _.string))
+  .assign("externalId", _.field("external_id", _.string));
+
+interface LoginStatus {
+  authToken: string;
+  externalId: string;
+}
+
+export const loginWithCode = (
+  phone: string,
+  code: string
+): Promise<LoginStatus> =>
   makeRequest(
     loginWithCodeUrl,
     "post",
     createLoginWithCodeBody(phone, code),
-    _.field("auth_token", _.string)
+    loginDecoder
   );
 
 /**
@@ -49,16 +62,16 @@ export const loginWithCode = (phone: string, code: string): Promise<string> =>
 export const getCandidateStatus = "/api/employer/status/";
 
 interface EmployerStatus {
-  companyGroupId: number;
-  companyGroupName: string;
-  companyGroupRole: string;
+  companyId: number;
+  companyName: string;
+  companyRole: string;
   employerId: number;
 }
 
 export const employerStatusDecoder = _.succeed({})
-  .assign("companyGroupId", _.field("company_group_id", _.number))
-  .assign("companyGroupName", _.field("company_group_name", _.string))
-  .assign("companyGroupRole", _.field("company_group_role", _.string))
+  .assign("companyId", _.field("company_group_id", _.number))
+  .assign("companyName", _.field("company_group_name", _.string))
+  .assign("companyRole", _.field("company_group_role", _.string))
   .assign("employerId", _.field("id", _.number));
 
 export const getUserForToken = (): Promise<EmployerStatus> =>

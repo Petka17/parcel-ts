@@ -1,6 +1,7 @@
 import React from "react";
 import Cookies from "js-cookie";
 import { codeRequest, loginWithCode } from "api/auth";
+import * as user from "state/user";
 
 import history from "state/history";
 
@@ -59,6 +60,8 @@ export function Provider({
     dispatch
   ] = React.useReducer(reducer, initialState);
 
+  const userContext = user.useContext();
+
   const setPhone = (phone: string): void => dispatch(new SetPhone(phone));
 
   const canStartCodeRequest = phone.length === PHONE_LENGTH && !isLoading;
@@ -84,8 +87,9 @@ export function Provider({
       dispatch(new StartLoginWithCode());
 
       loginWithCode(phone, code)
-        .then(authToken => {
+        .then(({ externalId, authToken }) => {
           dispatch(new LoginWithCodeSuccess());
+          userContext.updateState({ externalId });
           Cookies.set("auth_token", authToken);
           history.push("/");
         })

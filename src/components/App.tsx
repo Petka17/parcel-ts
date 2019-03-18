@@ -10,7 +10,6 @@ import PrivateApp from "./PrivateApp";
 
 const App = (): React.ReactElement => (
   <user.Provider>
-    <TestComp />
     <Router history={history}>
       <Switch>
         <Route path="/signin" exact component={Signin} />
@@ -19,11 +18,5 @@ const App = (): React.ReactElement => (
     </Router>
   </user.Provider>
 );
-
-const TestComp = (): React.ReactElement => {
-  const userContext = user.useContext();
-
-  return <div>{JSON.stringify(userContext, null, 2)}</div>;
-};
 
 export default App;

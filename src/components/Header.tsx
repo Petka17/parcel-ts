@@ -6,6 +6,7 @@ import * as user from "state/user";
 
 export default function Header(): React.ReactElement {
   const userContext = user.useContext();
+
   const signOut = (): void => {
     Cookies.remove("auth_token");
     userContext.clearState();
